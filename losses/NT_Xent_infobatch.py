@@ -7,7 +7,7 @@ import torch.nn.functional as F
 
 class NT_Xent_infobatch(nn.Module):
     def __init__(self, temperature=0.07, base_temperature=0.07):
-        super(NT_Xent, self).__init__()
+        super(NT_Xent_infobatch, self).__init__()
         self.temperature = temperature
         self.base_temperature = base_temperature
 
