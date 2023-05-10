@@ -22,7 +22,6 @@ from typing import Iterator, List, Optional, Union
 class InfoBatch(Dataset):
     def __init__(self, dataset, ratio = 0.5, momentum = 0.8, num_epoch=None, delta = 0.875):
         self.dataset = dataset
-        self.CLASSES = dataset.CLASSES
         self.ratio = ratio
         self.momentum = momentum
         self.num_epoch = num_epoch
@@ -30,8 +29,8 @@ class InfoBatch(Dataset):
         self.scores = np.full([len(self.dataset)],100)
         self.weights = np.ones(len(self.dataset))
         self.save_num = 0
-        for k in dataset.__dict__.keys()-self.__dict__.keys():
-            self.__dict__[k] = dataset.__dict__[k]
+#         for k in dataset.__dict__.keys()-self.__dict__.keys():
+#             self.__dict__[k] = dataset.__dict__[k]
 
     def __setscore__(self, indices, values):
         self.scores[indices] = (1-self.momentum)*self.scores[indices]+self.momentum*values
