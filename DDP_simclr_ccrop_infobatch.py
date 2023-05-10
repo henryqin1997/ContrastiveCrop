@@ -146,6 +146,9 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
     end = time.time()
     time1 = time.time()
     for idx, (images, indices, weights) in enumerate(train_loader):
+        print(images)
+        print(indices)
+        print(weights)
         bsz = images[0].shape[0]
         images = torch.cat([images[0], images[1]], dim=0)
         images = images.cuda(cfg.local_rank, non_blocking=True)
