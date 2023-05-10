@@ -326,6 +326,7 @@ def main_worker(rank, world_size, cfg):
             'epoch': cfg.epochs
         }
         torch.save(state_dict, model_path)
+        print('Total saved number of sample iteration:',train_set.total_save())
 
 
 if __name__ == '__main__':
