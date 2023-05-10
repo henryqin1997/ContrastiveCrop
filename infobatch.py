@@ -28,10 +28,10 @@ class InfoBatch(Dataset):
         self.num_epoch = num_epoch
         self.delta = delta
         self.scores = np.full([len(self.dataset)],100)
-        if hasattr(dataset,'transform'):
-            self.transform = dataset.transform
         self.weights = np.ones(len(self.dataset))
         self.save_num = 0
+        for k in dataset.__dict__.keys()-self.__dict__.keys():
+            self.__dict__[k] = dataset.__dict__[k]
 
     def __setscore__(self, indices, values):
         self.scores[indices] = (1-self.momentum)*self.scores[indices]+self.momentum*values
