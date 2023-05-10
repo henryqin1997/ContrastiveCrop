@@ -163,16 +163,15 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
         print(scores)
 
         trainset = train_loader.dataset
-        if args.distributed:
-            low,high = split_index(indices)
-            low,high = low.cuda(),high.cuda()
-            tuple = torch.stack([low,high,scores])
-            tuple_all = concat_all_gather(tuple, dim=1)
-            low_all, high_all, scores_all = tuple_all[0].type(torch.int), tuple_all[1].type(torch.int), tuple_all[2]
-            indices_all = recombine_index(low_all,high_all)
-            trainset.__setscore__(indices_all.detach().cpu().numpy(), scores_all.detach().cpu().numpy())
-        else:
-            trainset.__setscore__(indices.detach().cpu().numpy(), scores.detach().cpu().numpy())
+
+        low,high = split_index(indices)
+        low,high = low.cuda(),high.cuda()
+        tuple = torch.stack([low,high,scores])
+        tuple_all = concat_all_gather(tuple, dim=1)
+        low_all, high_all, scores_all = tuple_all[0].type(torch.int), tuple_all[1].type(torch.int), tuple_all[2]
+        indices_all = recombine_index(low_all,high_all)
+        trainset.__setscore__(indices_all.detach().cpu().numpy(), scores_all.detach().cpu().numpy())
+
 
         losses.update(loss.item(), bsz)
 
