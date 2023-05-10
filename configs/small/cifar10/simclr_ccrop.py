@@ -17,6 +17,7 @@ data = dict(
             type='CIFAR10_boxes',
             root=root,
             train=True,
+            download=True
         ),
         rcrop_dict=dict(
             type='cifar_train_rcrop',
