@@ -244,11 +244,11 @@ def main_worker(rank, world_size, cfg):
     print('batch_size per gpu:', bsz_gpu)
 
     train_set = build_dataset_ccrop(cfg.data.train)
-    train_set = InfoBatch(train_set)
+    train_set = InfoBatch(train_set, num_epoch = cfg.epochs)
 
     len_ds = len(train_set)
 #     train_sampler = torch.utils.data.distributed.DistributedSampler(train_set, shuffle=True)
-    train_sampler = DistributedSamplerWrapper(dataset.train_set(),world_size,rank,shuffle=False)
+    train_sampler = DistributedSamplerWrapper(train_set.pruning_sampler(),world_size,rank,shuffle=False)
 
     train_loader = torch.utils.data.DataLoader(
         train_set,
