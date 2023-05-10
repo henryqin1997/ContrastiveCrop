@@ -146,9 +146,7 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
     end = time.time()
     time1 = time.time()
     for idx, (images, indices, weights) in enumerate(train_loader):
-        print(images)
-        print(indices)
-        print(weights)
+        images = images[0]
         bsz = images[0].shape[0]
         images = torch.cat([images[0], images[1]], dim=0)
         images = images.cuda(cfg.local_rank, non_blocking=True)
@@ -176,8 +174,6 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
         else:
             trainset.__setscore__(indices.detach().cpu().numpy(), scores.detach().cpu().numpy())
 
-
-        loss = loss*weights
         losses.update(loss.item(), bsz)
 
         # compute gradient and do SGD step
