@@ -157,6 +157,8 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
         features = model(images)  # (2*bsz, C)
         f1, f2 = torch.split(features, [bsz, bsz], dim=0)
         loss = criterion(f1, f2)
+        print(loss)
+        print(len(loss))
         trainset = train_loader.dataset
         scores = loss
         if args.distributed:
@@ -169,6 +171,7 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
             trainset.__setscore__(indices_all.detach().cpu().numpy(), scores_all.detach().cpu().numpy())
         else:
             trainset.__setscore__(indices.detach().cpu().numpy(), scores.detach().cpu().numpy())
+
 
         loss = loss*weights
         losses.update(loss.item(), bsz)
