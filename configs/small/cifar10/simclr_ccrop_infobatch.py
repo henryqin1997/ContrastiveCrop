@@ -3,7 +3,7 @@
 # model
 dim = 128
 model = dict(type='ResNet', depth=18, num_classes=dim, maxpool=False)
-loss = dict(type='NT_Xent_infobatch', temperature=0.5, base_temperature=0.07, reduction='None')
+loss = dict(type='NT_Xent_infobatch', temperature=0.5, base_temperature=0.07)
 
 # data
 root = './data'
