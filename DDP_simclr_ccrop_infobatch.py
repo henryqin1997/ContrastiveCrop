@@ -154,8 +154,8 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
         # measure data time
         data_time.update(time.time() - end)
 
-        print('len of indices:',len(indices))
-        print('len of weights in local:',len(weights))
+#         print('len of indices:',len(indices))
+#         print('len of weights in local:',len(weights))
 
         # compute loss
         features = model(images)  # (2*bsz, C)

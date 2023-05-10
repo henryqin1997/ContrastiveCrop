@@ -22,7 +22,7 @@ class NT_Xent_infobatch(nn.Module):
         # works for DataParallel; default cuda:0
         device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-        print('len of weights in loss:',len(weights))
+#         print('len of weights in loss:',len(weights))
 
         batch_size = feat1.shape[0]
         # compute logits
@@ -74,6 +74,7 @@ class NT_Xent_infobatch(nn.Module):
         rescale_numerator = torch.cat([weights,weights],dim=0)
 
         scores = -logits[pos_mask] + torch.log(exp_logits.sum(1))
+        scores = scores[:batch_size] + scores[batch_size:]
 
         log_prob = rescale_logits*logits[pos_mask] - rescale_numerator*torch.log(exp_logits.sum(1))
 
