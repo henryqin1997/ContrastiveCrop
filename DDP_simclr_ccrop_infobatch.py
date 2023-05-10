@@ -245,7 +245,7 @@ def main_worker(rank, world_size, cfg):
 
     len_ds = len(train_set)
 #     train_sampler = torch.utils.data.distributed.DistributedSampler(train_set, shuffle=True)
-    train_sampler = DistributedSamplerWrapper(dataset.pruning_sampler(),world_size,rank,shuffle=False)
+    train_sampler = DistributedSamplerWrapper(dataset.train_set(),world_size,rank,shuffle=False)
 
     train_loader = torch.utils.data.DataLoader(
         train_set,
