@@ -22,6 +22,8 @@ class NT_Xent_infobatch(nn.Module):
         # works for DataParallel; default cuda:0
         device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
+        print('len of weights in loss:',len(weights))
+
         batch_size = feat1.shape[0]
         # compute logits
         features = torch.cat([feat1, feat2], dim=0)
