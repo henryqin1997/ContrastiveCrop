@@ -68,8 +68,8 @@ class NT_Xent_infobatch(nn.Module):
         # compute log_prob
         exp_logits = torch.exp(logits)[neg_mask].view(2 * batch_size, -1)
 
-        rescale_logits = torch.cat([weight**2,weights**2],dim=0)
-        rescale_numerator = torch.cat([weight,weight],dim=0)
+        rescale_logits = torch.cat([weights**2,weights**2],dim=0)
+        rescale_numerator = torch.cat([weights,weights],dim=0)
 
         scores = logits[pos_mask] - torch.log(exp_logits.sum(1))
 
