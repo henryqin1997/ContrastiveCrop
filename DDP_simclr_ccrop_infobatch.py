@@ -156,11 +156,12 @@ def train(train_loader, model, criterion, optimizer, epoch, cfg, logger, writer)
         # compute loss
         features = model(images)  # (2*bsz, C)
         f1, f2 = torch.split(features, [bsz, bsz], dim=0)
-        loss = criterion(f1, f2)
+        loss,scores = criterion(f1, f2)
+
         print(loss)
-        print(len(loss))
+        print(scores)
+
         trainset = train_loader.dataset
-        scores = loss
         if args.distributed:
             low,high = split_index(indices)
             low,high = low.cuda(),high.cuda()
